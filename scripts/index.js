@@ -47,7 +47,7 @@ todoList.forEach(createButtonHandler);
 
 const createButtonHandler2 = () => {
 
-    const newTask = {task: userInputText , done: true, deadline: "2024-02-29"};
+    const newTask = {task: userInputText , done: false};
     todoList.push(newTask);
 
     const newListItem = document.createElement('li');
@@ -57,34 +57,30 @@ const createButtonHandler2 = () => {
     listAllElements.append(newListItem);
 }
 
-const updateList = (list) => {
+const controllList = (list) =>{
     listObject.innerHTML = '';
     list.forEach(task => {
         const newListItem = document.createElement('li');
         newListItem.classList.add('list-item');
-        if(task.done){
-            newListItem.classList.add('list-item_done');
-        }
-        newListItem.textContent = task.task;
-        newListItem.addEventListener('click', listItemHandler);
+        newListItem.textContent = task['task'];
+            if(task['done']){
+                newListItem.classList.add('list-item_done');
+            }
+        newListItem.textContent = task['task'];
         listObject.append(newListItem);
     });
 }
 
 const inputHandler = () => {
-    userInputText = inputElement.value;
-    
-}
-
-const btnHandler = (evt) => {
-    evt.preventDefault();
-
+    userInputText = inputElement.value; 
 }
 
 listObject.addEventListener('click', listItemHandler);
 createButton.addEventListener('click', createButtonHandler2);
 inputElement.addEventListener('input', inputHandler);
-all.addEventListener('click', () => updateList(todoList));
-completed.addEventListener('click', () => updateList(todoList.filter(task => task.done)));
-notCompleted.addEventListener('click', () => updateList(todoList.filter(task => !task.done)));
+
+all.addEventListener('click', () => controllList(todoList));
+completed.addEventListener('click', () => controllList(todoList.filter(task => task.done)));
+notCompleted.addEventListener('click', () => controllList(todoList.filter(task => !task.done)));
+
 console.log(todoList);
