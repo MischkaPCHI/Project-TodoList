@@ -25,8 +25,6 @@ const listItemHandler = (evt) => {
     evt.target.classList.toggle('list-item_done');
 };
 
-const funk = (object) => {object.classList.toggle('list-item_done')};
-
 const inputElement = document.querySelector('.task-input');
 const createButton = document.querySelector('.btn');
 let userInputText;
