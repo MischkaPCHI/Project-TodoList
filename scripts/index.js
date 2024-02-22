@@ -21,42 +21,41 @@ const all = document.querySelector('#all');
 const completed = document.querySelector('#completed');
 const notCompleted = document.querySelector('#not_completed');
 
-const listItemHandler = (evt) => {
-    evt.target.classList.toggle('list-item_done');
-};
-
 const inputElement = document.querySelector('.task-input');
 const createButton = document.querySelector('.btn');
 let userInputText;
 
-const createButtonHandler = (object) => {
-    const newListItem = document.createElement('li');
-    newListItem.classList.add('list-item');
-    newListItem.textContent = object['task'];
-        if(object['done'] === true){
-            newListItem.classList.add('list-item_done');
-        }
-    const listAllElements = document.querySelector('.list');
-    listAllElements.append(newListItem);
-}
+const listItemHandler = (evt) => {                                          //переключатель 
+    evt.target.classList.toggle('list-item_done');
+};
+// const createButtonHandler = (object) => {                            //это нам теперь и не нужно из за updateList
+//     const newListItem = document.createElement('li');
+//     newListItem.classList.add('list-item');
+//     newListItem.textContent = object['task'];
+//         if(object['done'] === true){
+//             newListItem.classList.add('list-item_done');
+//         }
+//     const listAllElements = document.querySelector('.list');
+//     listAllElements.append(newListItem);
+// }
 
-todoList.forEach(createButtonHandler);
+// todoList.forEach(createButtonHandler);
 
 const createButtonHandler2 = () => {
     const newTask = {task: userInputText , done: false};
     todoList.push(newTask);
-    controllList(todoList);
+
+    // const newListItem = document.createElement('li');                зачем если он уже его добовляет в массив
+    // newListItem.classList.add('list-item');
+    // newListItem.textContent = userInputText;
+    // const listAllElements = document.querySelector('.list');
+    // listAllElements.append(newListItem);
+
+    updateList(todoList);
 }
 
-const listItemClickHandler = (event) => {
-    const taskText = event.target.textContent;
-    const task = todoList.find(task => task.task === taskText);
-    task.done = !task.done;
-    controllList(todoList);
-}
-
-const controllList = (list) =>{
-    listObject.innerHTML = '';
+const updateList = (list) =>{                                           //обновляет массив очищая всё и затем добавляет по новой всё что ему передаётся 
+    listObject.innerHTML = '';      // => очищает содержимое
     list.forEach(task => {
         const newListItem = document.createElement('li');
         newListItem.classList.add('list-item');
@@ -69,6 +68,12 @@ const controllList = (list) =>{
     });
 }
 
+const listItemClickHandler = (event) => {                                //переключает состояние объекта / true = false а / false = true
+    const task = todoList.find(task => task.task === event.target.textContent); // => ищет по task и возвращает этот обхект
+    task.done = !task.done;
+    updateList(todoList);
+}
+
 const inputHandler = () => {
     userInputText = inputElement.value;
 }
@@ -77,8 +82,10 @@ listObject.addEventListener('click', listItemHandler);
 createButton.addEventListener('click', createButtonHandler2);
 inputElement.addEventListener('input', inputHandler);
 
-all.addEventListener('click', () => controllList(todoList));
-completed.addEventListener('click', () => controllList(todoList.filter(task => task.done)));
-notCompleted.addEventListener('click', () => controllList(todoList.filter(task => !task.done)));
+all.addEventListener('click', () => updateList(todoList));
+completed.addEventListener('click', () => updateList(todoList.filter(task => task.done)));          //фильтрует сделано
+notCompleted.addEventListener('click', () => updateList(todoList.filter(task => !task.done)));      //фильтрует не сделанио
+
+updateList(todoList);
 
 console.log(todoList);
