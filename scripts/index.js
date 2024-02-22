@@ -29,7 +29,6 @@ const inputElement = document.querySelector('.task-input');
 const createButton = document.querySelector('.btn');
 let userInputText;
 
-
 const createButtonHandler = (object) => {
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
@@ -44,15 +43,16 @@ const createButtonHandler = (object) => {
 todoList.forEach(createButtonHandler);
 
 const createButtonHandler2 = () => {
-
     const newTask = {task: userInputText , done: false};
     todoList.push(newTask);
+    controllList(todoList);
+}
 
-    const newListItem = document.createElement('li');
-    newListItem.classList.add('list-item');
-    newListItem.textContent = userInputText;
-    const listAllElements = document.querySelector('.list');
-    listAllElements.append(newListItem);
+const listItemClickHandler = (event) => {
+    const taskText = event.target.textContent;
+    const task = todoList.find(task => task.task === taskText);
+    task.done = !task.done;
+    controllList(todoList);
 }
 
 const controllList = (list) =>{
@@ -64,13 +64,13 @@ const controllList = (list) =>{
             if(task['done']){
                 newListItem.classList.add('list-item_done');
             }
-        newListItem.textContent = task['task'];
+        newListItem.addEventListener('click', listItemClickHandler);
         listObject.append(newListItem);
     });
 }
 
 const inputHandler = () => {
-    userInputText = inputElement.value; 
+    userInputText = inputElement.value;
 }
 
 listObject.addEventListener('click', listItemHandler);
