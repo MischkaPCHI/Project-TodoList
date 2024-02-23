@@ -47,8 +47,10 @@ const inputHandler = () => {
 
 const createButtonHandler2 = () => {
     if(userInputText !== undefined){                                    //проверка на пустую строку
-        const newTask = {task: userInputText , done: false};
-        todoList.push(newTask);
+        if(userInputText !== ''){
+            const newTask = {task: userInputText , done: false};
+            todoList.push(newTask);
+        }
     }
     // const newListItem = document.createElement('li');                зачем если он уже его добовляет в массив
     // newListItem.classList.add('list-item');
