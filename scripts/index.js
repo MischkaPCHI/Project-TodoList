@@ -42,9 +42,10 @@ const listItemHandler = (evt) => {                                          //п
 // todoList.forEach(createButtonHandler);
 
 const createButtonHandler2 = () => {
-    const newTask = {task: userInputText , done: false};
-    todoList.push(newTask);
-
+    if(userInputText !== undefined){                                    //проверка на пустую строку
+        const newTask = {task: userInputText , done: false};
+        todoList.push(newTask);
+    }
     // const newListItem = document.createElement('li');                зачем если он уже его добовляет в массив
     // newListItem.classList.add('list-item');
     // newListItem.textContent = userInputText;
