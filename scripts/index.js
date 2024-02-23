@@ -41,6 +41,10 @@ const listItemHandler = (evt) => {                                          //п
 
 // todoList.forEach(createButtonHandler);
 
+const inputHandler = () => {
+    userInputText = inputElement.value;
+}
+
 const createButtonHandler2 = () => {
     if(userInputText !== undefined){                                    //проверка на пустую строку
         const newTask = {task: userInputText , done: false};
@@ -73,10 +77,6 @@ const listItemClickHandler = (event) => {                                //пе�
     const task = todoList.find(task => task.task === event.target.textContent); // => ищет по task и возвращает этот обхект
     task.done = !task.done;
     updateList(todoList);
-}
-
-const inputHandler = () => {
-    userInputText = inputElement.value;
 }
 
 listObject.addEventListener('click', listItemHandler);
